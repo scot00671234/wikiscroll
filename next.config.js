@@ -6,10 +6,8 @@ const nextConfig = {
     unoptimized: true,
     domains: ['upload.wikimedia.org'],
   },
-  // Disable SWC minification
+  // Disable SWC minification for older Next.js
   swcMinify: false,
-  // Disable experimental features
-  experimental: {},
   // Environment variables
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
