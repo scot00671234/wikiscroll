@@ -19,6 +19,11 @@ interface WikipediaArticle {
     lat: number
     lon: number
   }>
+  content_urls?: {
+    desktop?: {
+      page: string
+    }
+  }
 }
 
 interface WikipediaResponse {
