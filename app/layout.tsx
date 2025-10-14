@@ -102,7 +102,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <main className="min-h-screen bg-gradient-to-br from-dark-50 to-dark-100">
+        <main className="min-h-screen bg-gradient-to-br from-primary-50/30 via-white to-accent-50/30">
           {children}
         </main>
       </body>

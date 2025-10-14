@@ -149,7 +149,7 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-hidden">
       <DynamicBackground articles={articles} />
       <Header 
         onSearch={handleSearch}
@@ -158,80 +158,91 @@ export default function HomePage() {
         onLogoClick={handleLogoClick}
       />
 
-
       {/* Articles Feed */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-16 pt-16">
-        <div className="max-w-4xl mx-auto">
-          {isSearching && searchQuery && (
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold text-dark-900 mb-2">
-                Search results for "{searchQuery}"
-              </h2>
-              <p className="text-dark-600">
-                {articles.length} article{articles.length !== 1 ? 's' : ''} found
-              </p>
-            </div>
-          )}
-          
-          <div className="space-y-12">
-            {articles.map((article, index) => (
-              <div
-                key={`${article.pageid}-${index}`}
-                ref={index === articles.length - 1 ? lastArticleRef : null}
-                data-article-index={index}
-                className="animate-in fade-in slide-in-from-bottom-4 duration-500"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <ArticleCard article={article} />
-              </div>
-            ))}
-          </div>
-          
-          {/* Loading Indicator */}
-          {loading && (
-            <div className="flex justify-center py-12 animate-in fade-in duration-500">
-              <div className="flex items-center gap-3 text-dark-600 bg-white/80 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-dark-100">
-                <div className="w-5 h-5 animate-spin text-primary-600">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12a9 9 0 11-6.219-8.56"></path>
-                  </svg>
+      <main className="relative z-10">
+        <section className="px-4 sm:px-6 lg:px-8 pb-20 pt-24">
+          <div className="max-w-6xl mx-auto">
+            {isSearching && searchQuery && (
+              <div className="mb-8 animate-fade-in">
+                <div className="glass-card p-8 rounded-2xl shadow-modern">
+                  <h2 className="text-3xl font-bold text-gradient mb-3">
+                    Search results for "{searchQuery}"
+                  </h2>
+                  <p className="text-dark-600 text-lg font-medium">
+                    {articles.length} article{articles.length !== 1 ? 's' : ''} found
+                  </p>
                 </div>
-                <span className="font-medium">Loading more articles...</span>
               </div>
+            )}
+            
+            <div className="space-y-12">
+              {articles.map((article, index) => (
+                <div
+                  key={`${article.pageid}-${index}`}
+                  ref={index === articles.length - 1 ? lastArticleRef : null}
+                  data-article-index={index}
+                  className="animate-fade-in hover-lift"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <ArticleCard article={article} />
+                </div>
+              ))}
             </div>
-          )}
           
-          {/* End of Results */}
-          {!hasMore && articles.length > 0 && !loading && (
-            <div className="text-center py-8">
-              <p className="text-dark-500">
-                {isSearching ? 'No more search results' : 'You\'ve reached the end!'}
-              </p>
-            </div>
-          )}
-          
-          {/* No Results */}
-          {articles.length === 0 && !loading && (
-            <div className="text-center py-16">
-              <div className="w-16 h-16 text-dark-300 mx-auto mb-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                </svg>
+            {/* Loading Indicator */}
+            {loading && (
+              <div className="flex justify-center py-20 animate-fade-in">
+                <div className="glass-card p-8 rounded-2xl shadow-modern">
+                  <div className="flex items-center gap-4 text-dark-700">
+                    <div className="loading-spinner"></div>
+                    <span className="font-semibold text-xl">Loading more articles...</span>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-dark-900 mb-2">
-                {isSearching ? 'No articles found' : 'No articles available'}
-              </h3>
-              <p className="text-dark-600">
-                {isSearching 
-                  ? 'Try searching with different keywords' 
-                  : 'Please try again later'
-                }
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
+            )}
+            
+            {/* End of Results */}
+            {!hasMore && articles.length > 0 && !loading && (
+              <div className="text-center py-16 animate-fade-in">
+                <div className="glass-card p-10 rounded-2xl shadow-modern max-w-lg mx-auto">
+                  <div className="w-16 h-16 text-primary-500 mx-auto mb-6">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 12l2 2 4-4"></path>
+                      <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"></path>
+                    </svg>
+                  </div>
+                  <p className="text-dark-700 text-xl font-semibold">
+                    {isSearching ? 'No more search results' : 'You\'ve reached the end!'}
+                  </p>
+                </div>
+              </div>
+            )}
+            
+            {/* No Results */}
+            {articles.length === 0 && !loading && (
+              <div className="text-center py-24 animate-fade-in">
+                <div className="glass-card p-12 rounded-3xl shadow-modern-lg max-w-2xl mx-auto">
+                  <div className="w-24 h-24 text-primary-400 mx-auto mb-8">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                  </div>
+                  <h3 className="text-3xl font-bold text-gradient mb-4">
+                    {isSearching ? 'No articles found' : 'No articles available'}
+                  </h3>
+                  <p className="text-dark-600 text-xl">
+                    {isSearching 
+                      ? 'Try searching with different keywords' 
+                      : 'Please try again later'
+                    }
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
     </div>
   )
 }
