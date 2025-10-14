@@ -3,10 +3,11 @@ Dockerfile
 node_modules
 npm-debug.log
 README.md
-.env
-.env.local
-.env.production.local
-.env.local
+.env*
 .next
 .git
 .gitignore
+.cursor
+*.log
+.DS_Store
+Thumbs.db
