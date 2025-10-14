@@ -29,9 +29,10 @@ interface HeaderProps {
   onSearch?: (query: string) => void
   onCategoryChange?: (category: string) => void
   selectedCategory?: string
+  onLogoClick?: () => void
 }
 
-export default function Header({ onSearch, onCategoryChange, selectedCategory = 'all' }: HeaderProps) {
+export default function Header({ onSearch, onCategoryChange, selectedCategory = 'all', onLogoClick }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isAboutOpen, setIsAboutOpen] = useState(false)
@@ -62,6 +63,11 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
             href="/" 
             className="flex items-center gap-3 group flex-shrink-0"
             onClick={() => {
+              // Reset search and category state
+              setSearchQuery('')
+              if (onLogoClick) {
+                onLogoClick()
+              }
               // Force scroll to top when clicking logo
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}

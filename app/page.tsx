@@ -74,6 +74,17 @@ export default function HomePage() {
     loadArticles(1, category)
   }, [loadArticles])
 
+  const handleLogoClick = useCallback(() => {
+    console.log('Logo clicked - resetting to home feed')
+    setSelectedCategory('all')
+    setPage(1)
+    setSearchQuery('')
+    setArticles([])
+    setHasMore(true)
+    setIsSearching(false)
+    loadArticles(1, 'all', '')
+  }, [loadArticles])
+
   const loadMore = useCallback(() => {
     if (!loading && hasMore) {
       const nextPage = page + 1
@@ -145,6 +156,7 @@ export default function HomePage() {
         onSearch={handleSearch}
         onCategoryChange={handleCategoryChange}
         selectedCategory={selectedCategory}
+        onLogoClick={handleLogoClick}
       />
 
 

@@ -130,19 +130,40 @@ export async function fetchWikipediaArticles(
       console.log('Category search data:', searchData)
       
       if (searchData.query?.search) {
-        // Create articles directly from search results
-        articles = searchData.query.search.map((item: any) => ({
-          pageid: item.pageid,
-          title: item.title,
-          extract: item.snippet ? item.snippet.replace(/<[^>]*>/g, '') : 'No summary available.',
-          thumbnail: undefined,
-          original: undefined,
-          description: undefined,
-          url: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
-          categories: [],
-          coordinates: []
-        }))
-        console.log('Category articles created:', articles.length)
+        // Get page IDs for fetching detailed info including images
+        const pageIds = searchData.query.search.map((item: any) => item.pageid).join('|')
+        
+        // Fetch detailed page info including images
+        const detailsUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&pageids=${pageIds}&prop=extracts|pageimages|description&exintro=true&explaintext=true&pithumbsize=400&origin=*`
+        
+        console.log('Fetching detailed info for category articles:', detailsUrl)
+        const detailsResponse = await fetch(detailsUrl)
+        const detailsData = await detailsResponse.json()
+        
+        // Create articles with proper image data
+        articles = searchData.query.search.map((item: any) => {
+          const pageData = detailsData.query?.pages?.[item.pageid]
+          return {
+            pageid: item.pageid,
+            title: item.title,
+            extract: pageData?.extract || (item.snippet ? item.snippet.replace(/<[^>]*>/g, '') : 'No summary available.'),
+            thumbnail: pageData?.thumbnail ? {
+              source: pageData.thumbnail.source,
+              width: pageData.thumbnail.width,
+              height: pageData.thumbnail.height
+            } : undefined,
+            original: pageData?.original ? {
+              source: pageData.original.source,
+              width: pageData.original.width,
+              height: pageData.original.height
+            } : undefined,
+            description: pageData?.description,
+            url: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
+            categories: [],
+            coordinates: []
+          }
+        })
+        console.log('Category articles created with images:', articles.length)
       }
     }
     
@@ -242,18 +263,39 @@ export async function searchWikipediaArticles(
     const searchResults = data.query.search
     console.log('Found search results:', searchResults.length)
     
-    // For now, let's create basic articles from search results without detailed API calls
-    const articles: WikipediaArticle[] = searchResults.map((item: any) => ({
-      pageid: item.pageid,
-      title: item.title,
-      extract: item.snippet ? item.snippet.replace(/<[^>]*>/g, '') : 'No summary available.',
-      thumbnail: undefined,
-      original: undefined,
-      description: undefined,
-      url: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
-      categories: [],
-      coordinates: []
-    }))
+    // Get page IDs for fetching detailed info including images
+    const pageIds = searchResults.map((item: any) => item.pageid).join('|')
+    
+    // Fetch detailed page info including images
+    const detailsUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&pageids=${pageIds}&prop=extracts|pageimages|description&exintro=true&explaintext=true&pithumbsize=400&origin=*`
+    
+    console.log('Fetching detailed info for search articles:', detailsUrl)
+    const detailsResponse = await fetch(detailsUrl)
+    const detailsData = await detailsResponse.json()
+    
+    // Create articles with proper image data
+    const articles: WikipediaArticle[] = searchResults.map((item: any) => {
+      const pageData = detailsData.query?.pages?.[item.pageid]
+      return {
+        pageid: item.pageid,
+        title: item.title,
+        extract: pageData?.extract || (item.snippet ? item.snippet.replace(/<[^>]*>/g, '') : 'No summary available.'),
+        thumbnail: pageData?.thumbnail ? {
+          source: pageData.thumbnail.source,
+          width: pageData.thumbnail.width,
+          height: pageData.thumbnail.height
+        } : undefined,
+        original: pageData?.original ? {
+          source: pageData.original.source,
+          width: pageData.original.width,
+          height: pageData.original.height
+        } : undefined,
+        description: pageData?.description,
+        url: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
+        categories: [],
+        coordinates: []
+      }
+    })
     
     console.log('Processed articles:', articles)
     return articles
