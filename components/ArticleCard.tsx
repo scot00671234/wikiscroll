@@ -33,25 +33,11 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   const [imageError, setImageError] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [isInView, setIsInView] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
-  const imageRef = useRef<HTMLDivElement>(null)
   
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text
     return text.substring(0, maxLength) + '...'
-  }
-  
-  const formatDate = (dateString: string) => {
-    try {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
-    } catch {
-      return 'Unknown date'
-    }
   }
   
   // Intersection Observer for scroll animations
@@ -84,36 +70,23 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   return (
     <div 
       ref={cardRef}
-      className={`article-card group transition-all duration-500 ${
-        isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } ${isHovered ? 'scale-[1.02] -translate-y-2' : 'scale-100 translate-y-0'}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className={`bg-white rounded-lg p-6 shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md ${
+        isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      }`}
     >
-      <div className="flex gap-8">
+      <div className="flex gap-6">
         {/* Image */}
         {imageUrl && (
           <div className="flex-shrink-0">
-            <div 
-              ref={imageRef}
-              className={`relative w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden bg-gradient-to-br from-primary-50 to-accent-50 transition-all duration-500 ${
-                isHovered ? 'scale-110 shadow-glow-lg' : 'scale-100 shadow-soft'
-              }`}
-            >
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden bg-gray-100">
               <Image
                 src={imageUrl}
                 alt={article.title}
                 fill
-                className={`object-cover transition-all duration-500 ${
-                  isHovered ? 'scale-110' : 'scale-100'
-                }`}
+                className="object-cover"
                 onError={() => setImageError(true)}
-                sizes="(max-width: 640px) 176px, 208px"
+                sizes="(max-width: 640px) 128px, 160px"
               />
-              <div className={`absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent transition-opacity duration-300 ${
-                isHovered ? 'opacity-100' : 'opacity-0'
-              }`} />
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-transparent" />
             </div>
           </div>
         )}
@@ -121,17 +94,13 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         {/* Content */}
         <div className="flex-1 min-w-0">
           {/* Header */}
-          <div className="flex items-start justify-between gap-6 mb-6">
+          <div className="flex items-start justify-between gap-4 mb-4">
             <div className="flex-1 min-w-0">
-              <h3 className={`text-3xl font-bold text-dark-900 mb-3 transition-all duration-300 line-clamp-2 ${
-                isHovered ? 'text-primary-600 drop-shadow-sm' : 'text-dark-900'
-              }`}>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
                 {article.title}
               </h3>
               {article.description && (
-                <p className={`text-lg font-semibold mb-4 transition-all duration-300 ${
-                  isHovered ? 'text-primary-500' : 'text-primary-600'
-                }`}>
+                <p className="text-sm font-medium text-blue-600 mb-3">
                   {article.description}
                 </p>
               )}
@@ -140,15 +109,11 @@ export default function ArticleCard({ article }: ArticleCardProps) {
               href={article.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex-shrink-0 p-4 rounded-2xl transition-all duration-300 group/link ${
-                isHovered 
-                  ? 'text-primary-600 bg-primary-50 shadow-glow scale-110' 
-                  : 'text-dark-400 hover:text-primary-600 hover:bg-primary-50 hover:scale-105'
-              }`}
+              className="flex-shrink-0 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
               aria-label={`Read full article: ${article.title}`}
             >
-              <div className="w-6 h-6">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover/link:translate-x-1 group-hover/link:-translate-y-1">
+              <div className="w-4 h-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15,3 21,3 21,9"></polyline>
                   <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -158,20 +123,14 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           </div>
           
           {/* Extract */}
-          <div className="mb-8">
-            <p className={`text-dark-700 leading-relaxed text-lg transition-all duration-300 ${
-              isHovered ? 'text-dark-800' : 'text-dark-700'
-            }`}>
-              {isExpanded ? article.extract : truncateText(article.extract, 250)}
+          <div className="mb-6">
+            <p className="text-gray-700 leading-relaxed">
+              {isExpanded ? article.extract : truncateText(article.extract, 200)}
             </p>
-            {article.extract.length > 250 && (
+            {article.extract.length > 200 && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className={`font-bold text-base mt-4 transition-all duration-300 hover:scale-105 ${
-                  isHovered 
-                    ? 'text-primary-500 hover:text-primary-600' 
-                    : 'text-primary-600 hover:text-primary-700'
-                }`}
+                className="font-medium text-sm mt-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
               >
                 {isExpanded ? 'Show less' : 'Read more'}
               </button>
@@ -179,15 +138,15 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           </div>
           
           {/* Metadata */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-dark-500">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
             <div className="flex items-center gap-1">
               <div className="w-4 h-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-500">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
               </div>
-              <span className="text-sm font-medium">Wikipedia</span>
+              <span>Wikipedia</span>
             </div>
             
             {article.coordinates && article.coordinates.length > 0 && (
@@ -219,17 +178,17 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           
           {/* Categories */}
           {article.categories && article.categories.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-4">
               {article.categories.slice(0, 3).map((category, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-dark-100 text-dark-600 text-xs rounded-full"
+                  className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
                 >
                   {category.replace('Category:', '')}
                 </span>
               ))}
               {article.categories.length > 3 && (
-                <span className="px-2 py-1 bg-dark-100 text-dark-600 text-xs rounded-full">
+                <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md">
                   +{article.categories.length - 3} more
                 </span>
               )}
@@ -238,21 +197,17 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         </div>
       </div>
       
-          {/* Action Button */}
-      <div className="mt-10 pt-8 border-t border-white/30">
+      {/* Action Button */}
+      <div className="mt-6 pt-4 border-t border-gray-100">
         <a
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`inline-flex items-center gap-3 px-8 py-4 font-bold text-lg rounded-2xl transition-all duration-300 group/btn border-2 ${
-            isHovered 
-              ? 'bg-primary-500 text-white border-primary-500 shadow-glow scale-105' 
-              : 'bg-white/80 text-primary-600 border-primary-200 hover:bg-primary-50 hover:border-primary-300 hover:scale-105'
-          }`}
+          className="inline-flex items-center gap-2 px-4 py-2 font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors duration-200"
         >
           <span>Read Article</span>
-          <div className="w-5 h-5 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-4 h-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15,3 21,3 21,9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>

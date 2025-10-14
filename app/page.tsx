@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import ArticleCard from '../components/ArticleCard'
 import Header from '../components/Header'
-import DynamicBackground from '../components/DynamicBackground'
 import { fetchWikipediaArticles, searchWikipediaArticles } from '../lib/wikipedia-api'
 
 export default function HomePage() {
@@ -32,12 +31,12 @@ export default function HomePage() {
       let newArticles
       if (query.trim()) {
         console.log('Searching for:', query)
-        newArticles = await searchWikipediaArticles(query, pageNum, 15) // Load more per batch
+        newArticles = await searchWikipediaArticles(query, pageNum, 15)
         console.log('Search results:', newArticles)
         setIsSearching(true)
       } else {
         console.log('Fetching category:', category)
-        newArticles = await fetchWikipediaArticles(category, pageNum, 15) // Load more per batch
+        newArticles = await fetchWikipediaArticles(category, pageNum, 15)
         console.log('Category results:', newArticles)
         setIsSearching(false)
       }
@@ -109,7 +108,7 @@ export default function HomePage() {
           loadMore()
         }
       },
-      { threshold: 0.1, rootMargin: '200px' } // Start loading 200px before reaching the end
+      { threshold: 0.1, rootMargin: '200px' }
     )
     
     if (lastArticleRef.current) {
@@ -131,7 +130,7 @@ export default function HomePage() {
           preloadMore()
         }
       },
-      { threshold: 0.1, rootMargin: '400px' } // Start preloading 400px before reaching trigger
+      { threshold: 0.1, rootMargin: '400px' }
     )
     
     if (preloadTriggerRef.current) {
@@ -149,8 +148,7 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <DynamicBackground articles={articles} />
+    <div className="min-h-screen bg-gray-50">
       <Header 
         onSearch={handleSearch}
         onCategoryChange={handleCategoryChange}
@@ -159,30 +157,28 @@ export default function HomePage() {
       />
 
       {/* Articles Feed */}
-      <main className="relative z-10">
-        <section className="px-4 sm:px-6 lg:px-8 pb-20 pt-24">
-          <div className="max-w-6xl mx-auto">
+      <main>
+        <section className="px-4 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-4xl mx-auto">
             {isSearching && searchQuery && (
-              <div className="mb-8 animate-fade-in">
-                <div className="glass-card p-8 rounded-2xl shadow-modern">
-                  <h2 className="text-3xl font-bold text-gradient mb-3">
+              <div className="mb-8">
+                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-1">
                     Search results for "{searchQuery}"
                   </h2>
-                  <p className="text-dark-600 text-lg font-medium">
+                  <p className="text-gray-600">
                     {articles.length} article{articles.length !== 1 ? 's' : ''} found
                   </p>
                 </div>
               </div>
             )}
             
-            <div className="space-y-12">
+            <div className="space-y-6">
               {articles.map((article, index) => (
                 <div
                   key={`${article.pageid}-${index}`}
                   ref={index === articles.length - 1 ? lastArticleRef : null}
                   data-article-index={index}
-                  className="animate-fade-in hover-lift"
-                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <ArticleCard article={article} />
                 </div>
@@ -191,11 +187,15 @@ export default function HomePage() {
           
             {/* Loading Indicator */}
             {loading && (
-              <div className="flex justify-center py-20 animate-fade-in">
-                <div className="glass-card p-8 rounded-2xl shadow-modern">
-                  <div className="flex items-center gap-4 text-dark-700">
-                    <div className="loading-spinner"></div>
-                    <span className="font-semibold text-xl">Loading more articles...</span>
+              <div className="flex justify-center py-12">
+                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+                  <div className="flex items-center gap-3 text-gray-600">
+                    <div className="w-5 h-5 animate-spin text-blue-600">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 12a9 9 0 11-6.219-8.56"></path>
+                      </svg>
+                    </div>
+                    <span className="font-medium">Loading more articles...</span>
                   </div>
                 </div>
               </div>
@@ -203,15 +203,9 @@ export default function HomePage() {
             
             {/* End of Results */}
             {!hasMore && articles.length > 0 && !loading && (
-              <div className="text-center py-16 animate-fade-in">
-                <div className="glass-card p-10 rounded-2xl shadow-modern max-w-lg mx-auto">
-                  <div className="w-16 h-16 text-primary-500 mx-auto mb-6">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 12l2 2 4-4"></path>
-                      <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"></path>
-                    </svg>
-                  </div>
-                  <p className="text-dark-700 text-xl font-semibold">
+              <div className="text-center py-8">
+                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 max-w-md mx-auto">
+                  <p className="text-gray-600">
                     {isSearching ? 'No more search results' : 'You\'ve reached the end!'}
                   </p>
                 </div>
@@ -220,18 +214,18 @@ export default function HomePage() {
             
             {/* No Results */}
             {articles.length === 0 && !loading && (
-              <div className="text-center py-24 animate-fade-in">
-                <div className="glass-card p-12 rounded-3xl shadow-modern-lg max-w-2xl mx-auto">
-                  <div className="w-24 h-24 text-primary-400 mx-auto mb-8">
+              <div className="text-center py-16">
+                <div className="bg-white rounded-lg p-12 shadow-sm border border-gray-200 max-w-lg mx-auto">
+                  <div className="w-16 h-16 text-gray-300 mx-auto mb-4">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                       <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                     </svg>
                   </div>
-                  <h3 className="text-3xl font-bold text-gradient mb-4">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     {isSearching ? 'No articles found' : 'No articles available'}
                   </h3>
-                  <p className="text-dark-600 text-xl">
+                  <p className="text-gray-600">
                     {isSearching 
                       ? 'Try searching with different keywords' 
                       : 'Please try again later'
