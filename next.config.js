@@ -6,19 +6,19 @@ const nextConfig = {
     unoptimized: true,
     domains: ['upload.wikimedia.org'],
   },
+  // Disable SWC minification to avoid Nixpacks build issues
   swcMinify: false,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  // Disable experimental features that might cause issues
   experimental: {
     outputFileTracingRoot: undefined,
   },
-  // Disable SWC entirely to avoid download issues
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = [...config.externals, 'swc']
-    }
-    return config
+  // Environment variables for Nixpacks
+  env: {
+    NEXT_TELEMETRY_DISABLED: '1',
+    NODE_OPTIONS: '--max-old-space-size=4096',
   },
 }
 
