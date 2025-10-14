@@ -147,7 +147,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
               aria-label={`Read full article: ${article.title}`}
             >
               <div className="w-5 h-5">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15,3 21,3 21,9"></polyline>
                   <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -181,12 +181,12 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           <div className="flex flex-wrap items-center gap-4 text-sm text-dark-500">
             <div className="flex items-center gap-1">
               <div className="w-4 h-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-500">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
               </div>
-              <span>Wikipedia</span>
+              <span className="text-sm font-medium">Wikipedia</span>
             </div>
             
             {article.coordinates && article.coordinates.length > 0 && (
@@ -251,7 +251,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         >
           <span>Read Article</span>
           <div className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform duration-200">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15,3 21,3 21,9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>

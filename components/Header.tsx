@@ -87,7 +87,7 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
           <form onSubmit={handleSearch} className="flex-1 max-w-2xl mx-8">
             <div className="relative">
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-400 w-4 h-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.35-4.35"></path>
                 </svg>
@@ -112,7 +112,7 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                 title={`Selected: ${selectedCategoryData?.name || 'All'}`}
               >
                 <div className="w-5 h-5">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:scale-110">
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                   </svg>
@@ -163,7 +163,7 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                 title="About WikiScroll"
               >
                 <div className="w-5 h-5">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:scale-110">
                     <circle cx="12" cy="12" r="1"></circle>
                     <circle cx="12" cy="5" r="1"></circle>
                     <circle cx="12" cy="19" r="1"></circle>
