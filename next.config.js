@@ -11,6 +11,13 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: undefined,
   },
+  // Disable SWC entirely to avoid download issues
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...config.externals, 'swc']
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig
