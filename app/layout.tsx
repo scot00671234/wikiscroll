@@ -101,10 +101,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
-        <main className="min-h-screen bg-gray-50">
-          {children}
-        </main>
+      <body className={`${inter.className} bg-gray-50`}>
+        {children}
       </body>
     </html>
   )
