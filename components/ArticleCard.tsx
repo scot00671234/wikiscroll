@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { ExternalLink, Calendar, MapPin, Tag, Eye } from 'lucide-react'
 import Image from 'next/image'
 
 interface ArticleCardProps {
@@ -147,7 +146,13 @@ export default function ArticleCard({ article }: ArticleCardProps) {
               }`}
               aria-label={`Read full article: ${article.title}`}
             >
-              <ExternalLink className="w-5 h-5" />
+              <div className="w-5 h-5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15,3 21,3 21,9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </div>
             </a>
           </div>
           
@@ -175,13 +180,23 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           {/* Metadata */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-dark-500">
             <div className="flex items-center gap-1">
-              <Eye className="w-4 h-4" />
+              <div className="w-4 h-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </div>
               <span>Wikipedia</span>
             </div>
             
             {article.coordinates && article.coordinates.length > 0 && (
               <div className="flex items-center gap-1">
-                <MapPin className="w-4 h-4" />
+                <div className="w-4 h-4">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
                 <span>
                   {article.coordinates[0].lat.toFixed(2)}, {article.coordinates[0].lon.toFixed(2)}
                 </span>
@@ -190,7 +205,12 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             
             {article.categories && article.categories.length > 0 && (
               <div className="flex items-center gap-1">
-                <Tag className="w-4 h-4" />
+                <div className="w-4 h-4">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                    <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                  </svg>
+                </div>
                 <span>{article.categories.length} categories</span>
               </div>
             )}
@@ -230,7 +250,13 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           }`}
         >
           <span>Read Article</span>
-          <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform duration-200" />
+          <div className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform duration-200">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
         </a>
       </div>
     </div>

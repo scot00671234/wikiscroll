@@ -2,27 +2,26 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Search, Menu, X, BookOpen, MoreVertical } from 'lucide-react'
 
 const CATEGORIES = [
-  { id: 'all', name: 'All', icon: BookOpen },
-  { id: 'philosophy', name: 'Philosophy', icon: BookOpen },
-  { id: 'physics', name: 'Physics', icon: BookOpen },
-  { id: 'mathematics', name: 'Mathematics', icon: BookOpen },
-  { id: 'art', name: 'Art', icon: BookOpen },
-  { id: 'history', name: 'History', icon: BookOpen },
-  { id: 'science', name: 'Science', icon: BookOpen },
-  { id: 'technology', name: 'Technology', icon: BookOpen },
-  { id: 'literature', name: 'Literature', icon: BookOpen },
-  { id: 'music', name: 'Music', icon: BookOpen },
-  { id: 'geography', name: 'Geography', icon: BookOpen },
-  { id: 'biology', name: 'Biology', icon: BookOpen },
-  { id: 'chemistry', name: 'Chemistry', icon: BookOpen },
-  { id: 'psychology', name: 'Psychology', icon: BookOpen },
-  { id: 'economics', name: 'Economics', icon: BookOpen },
-  { id: 'politics', name: 'Politics', icon: BookOpen },
-  { id: 'sports', name: 'Sports', icon: BookOpen },
-  { id: 'medicine', name: 'Medicine', icon: BookOpen },
+  { id: 'all', name: 'All' },
+  { id: 'philosophy', name: 'Philosophy' },
+  { id: 'physics', name: 'Physics' },
+  { id: 'mathematics', name: 'Mathematics' },
+  { id: 'art', name: 'Art' },
+  { id: 'history', name: 'History' },
+  { id: 'science', name: 'Science' },
+  { id: 'technology', name: 'Technology' },
+  { id: 'literature', name: 'Literature' },
+  { id: 'music', name: 'Music' },
+  { id: 'geography', name: 'Geography' },
+  { id: 'biology', name: 'Biology' },
+  { id: 'chemistry', name: 'Chemistry' },
+  { id: 'psychology', name: 'Psychology' },
+  { id: 'economics', name: 'Economics' },
+  { id: 'politics', name: 'Politics' },
+  { id: 'sports', name: 'Sports' },
+  { id: 'medicine', name: 'Medicine' },
 ]
 
 interface HeaderProps {
@@ -87,7 +86,12 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="flex-1 max-w-2xl mx-8">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-400 w-4 h-4" />
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-400 w-4 h-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+              </div>
               <input
                 type="text"
                 placeholder="Search Wikipedia..."
@@ -107,7 +111,12 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                 className="flex items-center justify-center w-10 h-10 text-dark-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200"
                 title={`Selected: ${selectedCategoryData?.name || 'All'}`}
               >
-                <BookOpen className="w-5 h-5" />
+                <div className="w-5 h-5">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                  </svg>
+                </div>
               </button>
 
               {/* Categories Dropdown Menu */}
@@ -115,7 +124,6 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                 <div className="absolute top-full left-0 mt-3 w-72 bg-white rounded-2xl shadow-2xl border border-dark-100/20 py-3 z-50 max-h-96 overflow-y-auto">
                   <div className="px-2">
                     {CATEGORIES.map((category, index) => {
-                      const Icon = category.icon
                       return (
                         <button
                           key={category.id}
@@ -131,7 +139,12 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                               ? 'bg-white/20' 
                               : 'bg-dark-100 group-hover:bg-primary-100'
                           }`}>
-                            <Icon className="w-4 h-4 flex-shrink-0" />
+                            <div className="w-4 h-4 flex-shrink-0">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                              </svg>
+                            </div>
                           </div>
                           <span className="font-medium">{category.name}</span>
                         </button>
@@ -149,7 +162,13 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                 className="flex items-center justify-center w-10 h-10 text-dark-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200"
                 title="About WikiScroll"
               >
-                <MoreVertical className="w-5 h-5" />
+                <div className="w-5 h-5">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="12" cy="5" r="1"></circle>
+                    <circle cx="12" cy="19" r="1"></circle>
+                  </svg>
+                </div>
               </button>
 
               {/* About Dropdown Menu */}
@@ -172,7 +191,20 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
               className="lg:hidden p-2 text-dark-600 hover:text-primary-600 transition-colors duration-200 flex-shrink-0"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <div className="w-5 h-5">
+                {isMenuOpen ? (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                  </svg>
+                )}
+              </div>
             </button>
           </div>
         </div>
@@ -184,7 +216,12 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
               {/* Mobile Search */}
               <form onSubmit={handleSearch}>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-400 w-4 h-4" />
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-400 w-4 h-4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                  </div>
                   <input
                     type="text"
                     placeholder="Search Wikipedia..."
@@ -209,7 +246,6 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                 <h3 className="text-xs font-semibold text-dark-500 mb-3 px-1 uppercase tracking-wide">Categories</h3>
                 <div className="grid grid-cols-4 gap-3">
                   {CATEGORIES.map((category) => {
-                    const Icon = category.icon
                     return (
                       <button
                         key={category.id}
@@ -226,7 +262,12 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
                             ? 'bg-white/20'
                             : 'bg-white'
                         }`}>
-                          <Icon className="w-4 h-4" />
+                          <div className="w-4 h-4">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                          </div>
                         </div>
                         <span className="text-center leading-tight">{category.name}</span>
                       </button>

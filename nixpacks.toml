@@ -2,13 +2,13 @@
 nixPkgs = ["nodejs_18"]
 
 [phases.install]
-cmds = ["npm install --omit=dev --no-audit --no-fund --prefer-offline"]
+cmds = ["npm install --omit=dev --no-audit --no-fund --prefer-offline --no-optional"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
-cmd = "npm start"
+cmd = "npx serve -s out -l 3000"
 
 [variables]
 NODE_ENV = "production"
