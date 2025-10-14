@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import ArticleCard from '@/components/ArticleCard'
-import Header from '@/components/Header'
-import DynamicBackground from '@/components/DynamicBackground'
-import { fetchWikipediaArticles, searchWikipediaArticles } from '@/lib/wikipedia-api'
+import ArticleCard from '../components/ArticleCard'
+import Header from '../components/Header'
+import DynamicBackground from '../components/DynamicBackground'
+import { fetchWikipediaArticles, searchWikipediaArticles } from '../lib/wikipedia-api'
 
 export default function HomePage() {
   const [articles, setArticles] = useState<any[]>([])
