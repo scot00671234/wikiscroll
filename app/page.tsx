@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Loader2, BookOpen } from 'lucide-react'
 import ArticleCard from '@/components/ArticleCard'
 import Header from '@/components/Header'
 import DynamicBackground from '@/components/DynamicBackground'
@@ -192,7 +191,11 @@ export default function HomePage() {
           {loading && (
             <div className="flex justify-center py-12 animate-in fade-in duration-500">
               <div className="flex items-center gap-3 text-dark-600 bg-white/80 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-dark-100">
-                <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
+                <div className="w-5 h-5 animate-spin text-primary-600">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12a9 9 0 11-6.219-8.56"></path>
+                  </svg>
+                </div>
                 <span className="font-medium">Loading more articles...</span>
               </div>
             </div>
@@ -210,7 +213,12 @@ export default function HomePage() {
           {/* No Results */}
           {articles.length === 0 && !loading && (
             <div className="text-center py-16">
-              <BookOpen className="w-16 h-16 text-dark-300 mx-auto mb-4" />
+              <div className="w-16 h-16 text-dark-300 mx-auto mb-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </div>
               <h3 className="text-xl font-semibold text-dark-900 mb-2">
                 {isSearching ? 'No articles found' : 'No articles available'}
               </h3>
