@@ -8,7 +8,7 @@ cmds = ["npm ci --omit=dev --no-audit --no-fund --prefer-offline --no-optional"]
 cmds = ["npm run build"]
 
 [start]
-cmd = "npm start"
+cmd = "nginx -g 'daemon off;'"
 
 [variables]
 NODE_ENV = "production"
