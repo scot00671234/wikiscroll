@@ -18,7 +18,6 @@ const nextConfig = {
   // Environment variables for Nixpacks
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
-    NODE_OPTIONS: '--max-old-space-size=4096',
   },
 }
 
