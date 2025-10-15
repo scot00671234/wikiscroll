@@ -14,7 +14,7 @@ cmds = [
 ]
 
 [start]
-cmd = "npx serve -s out -l 3000"
+cmd = "npm start"
 
 [variables]
 NODE_ENV = "production"
