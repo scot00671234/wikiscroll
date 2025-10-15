@@ -70,22 +70,22 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   return (
     <div 
       ref={cardRef}
-      className={`bg-white rounded-lg p-6 shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md ${
+      className={`bg-white rounded-lg p-4 shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md ${
         isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       }`}
     >
-      <div className="flex gap-6">
+      <div className="flex gap-4">
         {/* Image */}
         {imageUrl && (
           <div className="flex-shrink-0">
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden bg-gray-100">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-gray-100">
               <Image
                 src={imageUrl}
                 alt={article.title}
                 fill
                 className="object-cover"
                 onError={() => setImageError(true)}
-                sizes="(max-width: 640px) 128px, 160px"
+                sizes="(max-width: 640px) 80px, 96px"
               />
             </div>
           </div>
@@ -109,10 +109,10 @@ export default function ArticleCard({ article }: ArticleCardProps) {
               href={article.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+              className="flex-shrink-0 p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
               aria-label={`Read full article: ${article.title}`}
             >
-              <div className="w-4 h-4">
+              <div className="w-3 h-3">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15,3 21,3 21,9"></polyline>
@@ -140,7 +140,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           {/* Metadata */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
             <div className="flex items-center gap-1">
-              <div className="w-4 h-4">
+              <div className="w-3 h-3">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
@@ -151,7 +151,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             
             {article.coordinates && article.coordinates.length > 0 && (
               <div className="flex items-center gap-1">
-                <div className="w-4 h-4">
+                <div className="w-3 h-3">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
@@ -165,7 +165,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             
             {article.categories && article.categories.length > 0 && (
               <div className="flex items-center gap-1">
-                <div className="w-4 h-4">
+                <div className="w-3 h-3">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
                     <line x1="7" y1="7" x2="7.01" y2="7"></line>
@@ -198,15 +198,15 @@ export default function ArticleCard({ article }: ArticleCardProps) {
       </div>
       
       {/* Action Button */}
-      <div className="mt-6 pt-4 border-t border-gray-100">
-        <a
+      <div className="mt-4 pt-3 border-t border-gray-100">
+          <a
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors duration-200"
+          className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors duration-200"
         >
           <span>Read Article</span>
-          <div className="w-4 h-4">
+          <div className="w-3 h-3">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15,3 21,3 21,9"></polyline>

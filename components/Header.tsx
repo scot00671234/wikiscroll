@@ -69,8 +69,8 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
           >
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-white">
+            <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 text-white">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
               </svg>
@@ -83,7 +83,7 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="flex-1 max-w-2xl mx-8">
             <div className="relative">
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.35-4.35"></path>
@@ -105,10 +105,10 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
             <div className="relative">
               <button
                 onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
-                className="flex items-center justify-center w-10 h-10 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+                className="flex items-center justify-center w-8 h-8 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
                 title={`Selected: ${selectedCategoryData?.name || 'All'}`}
               >
-                <div className="w-5 h-5">
+                <div className="w-4 h-4">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
@@ -145,10 +145,10 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
             <div className="relative">
               <button
                 onClick={() => setIsAboutOpen(!isAboutOpen)}
-                className="flex items-center justify-center w-10 h-10 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+                className="flex items-center justify-center w-8 h-8 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
                 title="About WikiScroll"
               >
-                <div className="w-5 h-5">
+                <div className="w-4 h-4">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="1"></circle>
                     <circle cx="12" cy="5" r="1"></circle>
@@ -174,10 +174,10 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-gray-600 hover:text-blue-600 transition-colors duration-200 flex-shrink-0"
+              className="lg:hidden p-1 text-gray-600 hover:text-blue-600 transition-colors duration-200 flex-shrink-0"
               aria-label="Toggle menu"
             >
-              <div className="w-5 h-5">
+              <div className="w-4 h-4">
                 {isMenuOpen ? (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -202,7 +202,7 @@ export default function Header({ onSearch, onCategoryChange, selectedCategory = 
               {/* Mobile Search */}
               <form onSubmit={handleSearch}>
                 <div className="relative">
-                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4">
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="11" cy="11" r="8"></circle>
                       <path d="m21 21-4.35-4.35"></path>

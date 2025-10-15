@@ -158,8 +158,8 @@ export default function HomePage() {
 
       {/* Articles Feed */}
       <main>
-        <section className="px-4 sm:px-6 lg:px-8 py-8">
-          <div className="max-w-4xl mx-auto">
+        <section className="px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-3xl mx-auto">
             {isSearching && searchQuery && (
               <div className="mb-8">
                 <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
@@ -173,7 +173,7 @@ export default function HomePage() {
               </div>
             )}
             
-            <div className="space-y-6">
+            <div className="space-y-4">
               {articles.map((article, index) => (
                 <div
                   key={`${article.pageid}-${index}`}
@@ -190,7 +190,7 @@ export default function HomePage() {
               <div className="flex justify-center py-12">
                 <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
                   <div className="flex items-center gap-3 text-gray-600">
-                    <div className="w-5 h-5 animate-spin text-blue-600">
+                    <div className="w-4 h-4 animate-spin text-blue-600">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M21 12a9 9 0 11-6.219-8.56"></path>
                       </svg>
@@ -216,7 +216,7 @@ export default function HomePage() {
             {articles.length === 0 && !loading && (
               <div className="text-center py-16">
                 <div className="bg-white rounded-lg p-12 shadow-sm border border-gray-200 max-w-lg mx-auto">
-                  <div className="w-16 h-16 text-gray-300 mx-auto mb-4">
+                  <div className="w-8 h-8 text-gray-300 mx-auto mb-4">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                       <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
