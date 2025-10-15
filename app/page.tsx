@@ -13,31 +13,22 @@ export default function HomePage() {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [isSearching, setIsSearching] = useState(false)
-  const [preloading, setPreloading] = useState(false)
   
   const observerRef = useRef<IntersectionObserver | null>(null)
   const lastArticleRef = useRef<HTMLDivElement | null>(null)
-  const preloadObserverRef = useRef<IntersectionObserver | null>(null)
-  const preloadTriggerRef = useRef<HTMLDivElement | null>(null)
 
-  const loadArticles = useCallback(async (pageNum: number, category: string, query: string = '', isPreload: boolean = false) => {
-    if (loading && !isPreload) return
+  const loadArticles = useCallback(async (pageNum: number, category: string, query: string = '') => {
+    if (loading) return
     
-    console.log('Loading articles:', { pageNum, category, query, loading, isPreload })
-    if (!isPreload) setLoading(true)
-    else setPreloading(true)
+    setLoading(true)
     
     try {
       let newArticles
       if (query.trim()) {
-        console.log('Searching for:', query)
-        newArticles = await searchWikipediaArticles(query, pageNum, 15)
-        console.log('Search results:', newArticles)
+        newArticles = await searchWikipediaArticles(query, pageNum, 10)
         setIsSearching(true)
       } else {
-        console.log('Fetching category:', category)
-        newArticles = await fetchWikipediaArticles(category, pageNum, 15)
-        console.log('Category results:', newArticles)
+        newArticles = await fetchWikipediaArticles(category, pageNum, 10)
         setIsSearching(false)
       }
       
@@ -51,13 +42,11 @@ export default function HomePage() {
     } catch (error) {
       console.error('Error loading articles:', error)
     } finally {
-      if (!isPreload) setLoading(false)
-      else setPreloading(false)
+      setLoading(false)
     }
   }, [loading])
 
   const handleSearch = useCallback((query: string) => {
-    console.log('Search triggered with query:', query)
     setSearchQuery(query)
     setPage(1)
     setArticles([])
@@ -73,7 +62,6 @@ export default function HomePage() {
   }, [loadArticles])
 
   const handleLogoClick = useCallback(() => {
-    console.log('Logo clicked - resetting to home feed')
     setSelectedCategory('all')
     setPage(1)
     setSearchQuery('')
@@ -91,13 +79,6 @@ export default function HomePage() {
     }
   }, [loading, hasMore, page, selectedCategory, searchQuery, loadArticles])
 
-  const preloadMore = useCallback(() => {
-    if (!preloading && hasMore && articles.length > 0) {
-      const nextPage = page + 1
-      loadArticles(nextPage, selectedCategory, searchQuery, true)
-    }
-  }, [preloading, hasMore, articles.length, page, selectedCategory, searchQuery, loadArticles])
-
   // Intersection Observer for infinite scroll
   useEffect(() => {
     if (observerRef.current) observerRef.current.disconnect()
@@ -108,7 +89,7 @@ export default function HomePage() {
           loadMore()
         }
       },
-      { threshold: 0.1, rootMargin: '200px' }
+      { threshold: 0.1, rootMargin: '100px' }
     )
     
     if (lastArticleRef.current) {
@@ -120,35 +101,13 @@ export default function HomePage() {
     }
   }, [loadMore, hasMore, loading])
 
-  // Preload observer - starts loading when user is 3 articles away from the end
-  useEffect(() => {
-    if (preloadObserverRef.current) preloadObserverRef.current.disconnect()
-    
-    preloadObserverRef.current = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !preloading && articles.length > 3) {
-          preloadMore()
-        }
-      },
-      { threshold: 0.1, rootMargin: '400px' }
-    )
-    
-    if (preloadTriggerRef.current) {
-      preloadObserverRef.current.observe(preloadTriggerRef.current)
-    }
-    
-    return () => {
-      if (preloadObserverRef.current) preloadObserverRef.current.disconnect()
-    }
-  }, [preloadMore, hasMore, preloading, articles.length])
-
   // Load initial articles
   useEffect(() => {
     loadArticles(1, selectedCategory)
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Header 
         onSearch={handleSearch}
         onCategoryChange={handleCategoryChange}
@@ -156,86 +115,65 @@ export default function HomePage() {
         onLogoClick={handleLogoClick}
       />
 
-      {/* Articles Feed */}
-      <main>
-        <section className="px-4 sm:px-6 lg:px-8 py-4">
-          <div className="max-w-3xl mx-auto">
-            {isSearching && searchQuery && (
-              <div className="mb-8">
-                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1">
-                    Search results for "{searchQuery}"
-                  </h2>
-                  <p className="text-gray-600">
-                    {articles.length} article{articles.length !== 1 ? 's' : ''} found
-                  </p>
-                </div>
-              </div>
-            )}
-            
-            <div className="space-y-4">
-              {articles.map((article, index) => (
-                <div
-                  key={`${article.pageid}-${index}`}
-                  ref={index === articles.length - 1 ? lastArticleRef : null}
-                  data-article-index={index}
-                >
-                  <ArticleCard article={article} />
-                </div>
-              ))}
-            </div>
-          
-            {/* Loading Indicator */}
-            {loading && (
-              <div className="flex justify-center py-12">
-                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <div className="w-4 h-4 animate-spin text-blue-600">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 12a9 9 0 11-6.219-8.56"></path>
-                      </svg>
-                    </div>
-                    <span className="font-medium">Loading more articles...</span>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            {/* End of Results */}
-            {!hasMore && articles.length > 0 && !loading && (
-              <div className="text-center py-8">
-                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 max-w-md mx-auto">
-                  <p className="text-gray-600">
-                    {isSearching ? 'No more search results' : 'You\'ve reached the end!'}
-                  </p>
-                </div>
-              </div>
-            )}
-            
-            {/* No Results */}
-            {articles.length === 0 && !loading && (
-              <div className="text-center py-16">
-                <div className="bg-white rounded-lg p-12 shadow-sm border border-gray-200 max-w-lg mx-auto">
-                  <div className="w-8 h-8 text-gray-300 mx-auto mb-4">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {isSearching ? 'No articles found' : 'No articles available'}
-                  </h3>
-                  <p className="text-gray-600">
-                    {isSearching 
-                      ? 'Try searching with different keywords' 
-                      : 'Please try again later'
-                    }
-                  </p>
-                </div>
-              </div>
-            )}
+      <main className="max-w-4xl mx-auto px-4 py-6">
+        {isSearching && searchQuery && (
+          <div className="mb-6">
+            <h2 className="text-lg font-medium text-gray-900 mb-1">
+              Search results for "{searchQuery}"
+            </h2>
+            <p className="text-sm text-gray-600">
+              {articles.length} article{articles.length !== 1 ? 's' : ''} found
+            </p>
           </div>
-        </section>
+        )}
+        
+        <div className="space-y-3">
+          {articles.map((article, index) => (
+            <div
+              key={`${article.pageid}-${index}`}
+              ref={index === articles.length - 1 ? lastArticleRef : null}
+            >
+              <ArticleCard article={article} />
+            </div>
+          ))}
+        </div>
+      
+        {loading && (
+          <div className="flex justify-center py-8">
+            <div className="flex items-center gap-2 text-gray-600">
+              <div className="w-4 h-4 animate-spin border-2 border-blue-600 border-t-transparent rounded-full"></div>
+              <span className="text-sm">Loading...</span>
+            </div>
+          </div>
+        )}
+        
+        {!hasMore && articles.length > 0 && !loading && (
+          <div className="text-center py-6">
+            <p className="text-sm text-gray-500">
+              {isSearching ? 'No more search results' : 'End of articles'}
+            </p>
+          </div>
+        )}
+        
+        {articles.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <div className="w-12 h-12 text-gray-300 mx-auto mb-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              {isSearching ? 'No articles found' : 'No articles available'}
+            </h3>
+            <p className="text-sm text-gray-600">
+              {isSearching 
+                ? 'Try different search terms' 
+                : 'Please try again later'
+              }
+            </p>
+          </div>
+        )}
       </main>
     </div>
   )
