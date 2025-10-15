@@ -12,8 +12,10 @@ const nextConfig = {
   env: {
     NEXT_TELEMETRY_DISABLED: '1',
   },
-  // Disable experimental features that might cause issues
-  experimental: {},
+  // Enable App Router for Next.js 13.0.6
+  experimental: {
+    appDir: true,
+  },
 }
 
 module.exports = nextConfig
