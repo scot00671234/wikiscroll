@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WikiScroll - Discover Wikipedia Articles</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">📚</div>
+                <span>WikiScroll</span>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search Wikipedia..." />
+                </div>
+            </div>
+            
+            <div class="controls">
+                <select id="categorySelect" class="category-select">
+                    <option value="all">All</option>
+                    <option value="philosophy">Philosophy</option>
+                    <option value="physics">Physics</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="art">Art</option>
+                    <option value="history">History</option>
+                    <option value="science">Science</option>
+                    <option value="technology">Technology</option>
+                    <option value="literature">Literature</option>
+                    <option value="music">Music</option>
+                    <option value="geography">Geography</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="psychology">Psychology</option>
+                    <option value="economics">Economics</option>
+                    <option value="politics">Politics</option>
+                    <option value="sports">Sports</option>
+                    <option value="medicine">Medicine</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div id="searchResults" class="search-results" style="display: none;">
+                <h2 id="searchTitle"></h2>
+                <p id="searchCount"></p>
+            </div>
+            
+            <div id="articlesContainer" class="articles-container">
+                <!-- Articles will be loaded here -->
+            </div>
+            
+            <div id="loadingIndicator" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <span>Loading more articles...</span>
+            </div>
+            
+            <div id="endMessage" class="end-message" style="display: none;">
+                <p>You've reached the end!</p>
+            </div>
+            
+            <div id="noResults" class="no-results" style="display: none;">
+                <div class="no-results-icon">📖</div>
+                <h3>No articles found</h3>
+                <p>Try searching with different keywords</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
