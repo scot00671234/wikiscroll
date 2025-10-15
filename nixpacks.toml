@@ -3,8 +3,7 @@ nixPkgs = ["nodejs"]
 
 [phases.install]
 cmds = [
-  "npm install --omit=dev --no-audit --no-fund --prefer-offline --no-optional",
-  "npm cache clean --force"
+  "npm install --no-audit --no-fund --prefer-offline --no-optional"
 ]
 
 [phases.build]
